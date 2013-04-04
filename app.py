@@ -21,14 +21,30 @@ def check_fields(container, fields):
             return field
     return None
 
-@app.route("/webhook")
-def form():
-    bt_challenge = request.args.get('bt_challenge')
-    return braintree.WebhookNotification.verify(bt_challenge)
 
 @app.route("/")
 def form():
     return render_template("braintree.html", plans=config.PLANS)
+
+
+@app.route("/webhook")
+def webhook_register():
+    bt_challenge = request.args.get('bt_challenge')
+    return braintree.WebhookNotification.verify(bt_challenge)
+
+
+@app.route("/webhook", methods=["POST"])
+def webhook_action():
+    bt_signature_param = request.args.get('bt_signature_param')
+    bt_payload_param = request.args.get('bt_payload_param')
+    if bt_signature_param and bt_payload_param:
+        hook = braintree.WebhookNotification.parse(bt_signature_param, bt_payload_param)
+        app.logger.warning('Webhook {kind} - id:{subscription_id} price:{price}'.format(
+            kind=hook.kind,
+            subscription_id=hook.subscription.id,
+            price=hook.subscription.price
+        ))
+    return
 
 
 
