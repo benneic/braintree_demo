@@ -59,17 +59,19 @@ def webhook_action():
 def create_customer():
     logger.info('Plan')
 
-    required_fields = ('package','company','email','first_name','last_name','postal_code','number','month','year','cvv')
-    not_found = check_fields(request.form, required_fields)
-    if not_found:
-        return make_response('<h1>Required form field missing: %s</h1>' % not_found, 500)
-
     customer = None
     package = request.form['package']
     customer_id = request.form.get('customer_id')
     if customer_id:
         customer = braintree.Customer.find(customer_id)
+
     if not isinstance(customer, braintree.Customer):
+
+        required_fields = ('package','company','email','first_name','last_name','postal_code','number','month','year','cvv')
+        not_found = check_fields(request.form, required_fields)
+        if not_found:
+            return make_response('<h1>Required form field missing: %s</h1>' % not_found, 500)
+
         customer = {
             "company": request.form['company'],
             "email": request.form['email'],

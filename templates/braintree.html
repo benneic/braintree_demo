@@ -11,43 +11,43 @@
             <input type='radio' name='package' value='{{ value }}'>{{ desc }}
             {% endfor %}*
         </p>
-        <h2>Customer Information</h2>
+        <h2>Existing Customer</h2>
+          <p>
+              <label for='customer_id'>Customer ID</label>
+              <input type='text' name='customer_id' id='customer_id' />
+          </p>
+        <h2>New Customer</h2>
         <p>
           <label for='company'>Company</label>
-          <input type='text' name='company' id='company' />*
+          <input type='text' name='company' id='company' />
         </p>
         <p>
           <label for='email'>Email</label>
-          <input type='text' name='email' id='email' />*
+          <input type='text' name='email' id='email' />
         </p>
         <p>
           <label for='first_name'>First Name</label>
-          <input type='text' name='first_name' id='first_name' />*
+          <input type='text' name='first_name' id='first_name' />
         </p>
         <p>
           <label for='last_name'>Last Name</label>
-          <input type='text' name='last_name' id='last_name' />*
+          <input type='text' name='last_name' id='last_name' />
         </p>
         <p>
           <label for='postal_code'>Postal Code</label>
-          <input type='text' name='postal_code' id='postal_code' />*
+          <input type='text' name='postal_code' id='postal_code' />
         </p>
-        <p>
-          <label for='customer_id'>Customer ID</label>
-          <input type='text' name='customer_id' id='customer_id' />
-        </p>
-        <h2>Credit Card</h2>
         <p>
           <label>Card Number</label>
-          <input type="text" size="20" name='number' data-encrypted-name="number" />*
+          <input type="text" size="20" name='number' data-encrypted-name="number" />
         </p>
         <p>
           <label>CVV</label>
-          <input type="text" size="4" name='cvv' data-encrypted-name="cvv" />*
+          <input type="text" size="4" name='cvv' data-encrypted-name="cvv" />
         </p>
         <p>
           <label>Expiration (MM/YYYY)</label>
-          <input type="text" size="2" name='month' data-encrypted-name="month" />* / <input type="text" size="4"  name='year' data-encrypted-name="year" />*
+          <input type="text" size="2" name='month' data-encrypted-name="month" />* / <input type="text" size="4"  name='year' data-encrypted-name="year" />
         </p>
         <input class='submit-button' type='submit' />
       </form>
