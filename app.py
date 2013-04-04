@@ -44,6 +44,7 @@ def webhook_action():
             subscription_id=hook.subscription.id,
             price=hook.subscription.price
         ))
+    app.logger.warning('Wrong params: %s' % dict(request.form).keys())
     return unicode(dict(request.form))
 
 
