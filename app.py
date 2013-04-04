@@ -5,9 +5,10 @@ app = Flask(__name__)
 
 import config
 
-import logging
-logging.basicConfig(level=logging.INFO)
-app.logger.addHandler(logging)
+if not app.debug:
+    import logging
+    handler = logging.Logger('app', level=logging.DEBUG)
+    app.logger.addHandler(handler)
 
 braintree.Configuration.configure(braintree.Environment.Sandbox,
                                   merchant_id=config.MERCHANT_ID,
