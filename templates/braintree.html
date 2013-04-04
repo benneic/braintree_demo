@@ -7,8 +7,9 @@
       <form action='/create_customer' method='POST' id="braintree-payment-form">
         <h2>Choose your payment plan</h2>
         <p>
-            <input type='radio' name='package' value='STORE_59_AUD'>Store Package
-            <input type='radio' name='package' value='FRANCHISE_99_AUD'>Franchise Package
+            {% for value, desc in plans.items() %}
+            <input type='radio' name='package' value='{{ value }}'>{{ desc }}
+            {% endfor %}
         </p>
         <h2>Customer Information</h2>
         <p>

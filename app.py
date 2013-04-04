@@ -12,7 +12,9 @@ braintree.Configuration.configure(braintree.Environment.Sandbox,
 
 @app.route("/")
 def form():
-    return render_template("braintree.html", client_key=config.CLIENT_SIDE_ENCRYPTION_KEY)
+    return render_template("braintree.html",
+                           client_key=config.CLIENT_SIDE_ENCRYPTION_KEY,
+                           plans=config.PLANS)
 
 @app.route('/create_customer', methods=["POST"])
 def create_customer():
