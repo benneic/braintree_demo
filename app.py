@@ -3,14 +3,16 @@ import braintree
 from flask import Flask, request, render_template
 app = Flask(__name__)
 
+import config
+
 braintree.Configuration.configure(braintree.Environment.Sandbox,
-                                  merchant_id="use_your_merchant_id",
-                                  public_key="use_your_public_key",
-                                  private_key="use_your_private_key")
+                                  merchant_id=config.MERCHANT_ID,
+                                  public_key=config.PUBLIC_KEY,
+                                  private_key=config.PRIVATE_KEY)
 
 @app.route("/")
 def form():
-    return render_template("braintree.html")
+    return render_template("braintree.html", client_key=config.CLIENT_SIDE_ENCRYPTION_KEY)
 
 @app.route('/create_customer', methods=["POST"])
 def create_customer():

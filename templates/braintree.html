@@ -41,7 +41,7 @@
     </div>
     <script type="text/javascript" src="https://js.braintreegateway.com/v1/braintree.js"></script>
     <script type="text/javascript">
-      var braintree = Braintree.create("YourClientSideEncryptionKey");
+      var braintree = Braintree.create({{ client_key }});
       braintree.onSubmitEncryptForm('braintree-payment-form');
     </script>
   </body>
