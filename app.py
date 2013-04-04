@@ -35,16 +35,16 @@ def webhook_register():
 
 @app.route("/webhook", methods=["POST"])
 def webhook_action():
-    bt_signature_param = request.args.get('bt_signature_param')
-    bt_payload_param = request.args.get('bt_payload_param')
-    if bt_signature_param and bt_payload_param:
-        hook = braintree.WebhookNotification.parse(bt_signature_param, bt_payload_param)
+    signature = request.form.get('bt_signature', type=str)
+    payload = request.form.get('bt_payload', type=str)
+    if signature and payload:
+        hook = braintree.WebhookNotification.parse(signature, payload)
         app.logger.warning('Webhook {kind} - id:{subscription_id} price:{price}'.format(
             kind=hook.kind,
             subscription_id=hook.subscription.id,
             price=hook.subscription.price
         ))
-    return
+    return unicode(dict(request.form))
 
 
 
