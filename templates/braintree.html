@@ -5,11 +5,11 @@
     <h1>Local Measure</h1>
     <div>
       <form action='/plan' method='POST' id="braintree-payment-form">
-        <h2>Choose your payment plan</h2>*
+        <h2>Choose your payment plan</h2>
         <p>
             {% for value, desc in plans.items() %}
             <input type='radio' name='package' value='{{ value }}'>{{ desc }}
-            {% endfor %}
+            {% endfor %}*
         </p>
         <h2>Customer Information</h2>
         <p>
