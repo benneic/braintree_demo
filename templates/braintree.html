@@ -2,21 +2,26 @@
   <head>
   </head>
   <body>
-    <h1>Braintree Credit Card Transaction Form</h1>
+    <h1>Local Measure</h1>
     <div>
       <form action='/create_customer' method='POST' id="braintree-payment-form">
+        <h2>Choose your payment plan</h2>
+        <p>
+            <input type='radio' name='package' value='STORE_59_AUD'>Store Package
+            <input type='radio' name='package' value='FRANCHISE_99_AUD'>Franchise Package
+        </p>
         <h2>Customer Information</h2>
         <p>
           <label>First Name</label>
-          <input type='text' name='first_name' id='first_name'></input>
+          <input type='text' name='first_name' id='first_name' />
         </p>
         <p>
           <label for='last_name'>Last Name</label>
-          <input type='text' name='last_name' id='last_name'></input>
+          <input type='text' name='last_name' id='last_name' />
         </p>
         <p>
           <label for='postal_code'>Postal Code</label>
-          <input type='text' name='postal_code' id='postal_code'></input>
+          <input type='text' name='postal_code' id='postal_code' />
         </p>
         <h2>Credit Card</h2>
         <p>
