@@ -4,9 +4,12 @@
 <body>
     <h1>Local Measure</h1>
     <h2>Subscription Status</h2>
-    <p>{{ customer.first_name }} {{ customer.last_name }} ({{ customer.id }})</p>
+    <p>Customer: {{ customer.first_name }} {{ customer.last_name }}</p>
+    <p>Customer ID: {{ customer.id }}</p>
     <p>Selected package: {{ plans[package] }}</p>
-    <p>Status: {{ status }}</p>
+    <p>Status: {{ subscription.status }}</p>
+    <p>Price: {{ subscription.price }}</p>
+    <p>Subscription ID: {{ subscription.id }}</p>
 </body>
 </html>
 

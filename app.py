@@ -5,8 +5,8 @@ app = Flask(__name__)
 
 import config
 
-import logging as logger
-logger.basicConfig(level=logger.INFO)
+import logging
+app.logger.basicConfig(level=logging.INFO)
 
 
 braintree.Configuration.configure(braintree.Environment.Sandbox,
@@ -27,38 +27,33 @@ def check_fields(container, fields):
 
 @app.route("/")
 def form():
-    logger.info('Mainpage')
     return render_template("braintree.html", plans=config.PLANS)
 
 
 @app.route("/webhook")
 def webhook_register():
-    logger.info('Challenge')
     bt_challenge = request.args.get('bt_challenge')
     return braintree.WebhookNotification.verify(bt_challenge)
 
 
 @app.route("/webhook", methods=["POST"])
 def webhook_action():
-    logger.info('Webhook')
+    app.logger.info('Webhook params: %s' % dict(request.form).keys())
     signature = request.form.get('bt_signature', type=str)
     payload = request.form.get('bt_payload', type=str)
     if signature and payload:
         hook = braintree.WebhookNotification.parse(signature, payload)
-        logger.info('Webhook {kind} - id:{subscription_id} price:{price}'.format(
+        app.logger.info('Webhook {kind} - id:{subscription_id} price:{price}'.format(
             kind=hook.kind,
             subscription_id=hook.subscription.id,
             price=hook.subscription.price
         ))
-    logger.info('Wrong params: %s' % dict(request.form).keys())
     return unicode(dict(request.form))
 
 
 
 @app.route('/plan', methods=["POST"])
 def create_customer():
-    logger.info('Plan')
-
     customer = None
     package = request.form['package']
     customer_id = request.form.get('customer_id')
@@ -103,7 +98,7 @@ def create_customer():
         return "<h1>New Subscription Error: {0}</h1>".format(result.message)
 
     return render_template("response.html",
-                           status=result.subscription.status,
+                           subscription=result.subscription,
                            plans=config.PLANS,
                            package=package,
                            customer=customer)
