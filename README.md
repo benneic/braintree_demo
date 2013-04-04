@@ -10,9 +10,16 @@ Add some recurring billing plans
 
 ## Config
 
-1. Copy .exampleconfig.py to config.py
-2. Update your config.py with the API Keys from Braintree Sandbox mainpage
-3. Update the PLANS in config.py with the plans you created
+Export your Braintree Sandbox API Keys as environment vars
+
+    export MERCHANT_ID="your_merch_key" PUBLIC_KEY="your_pub_key" PRIVATE_KEY="you_priv_key" CLIENT_SIDE_ENCRYPTION_KEY="your_encryt_key"
+
+Update the PLANS in config.py with the plans you created
+
+    PLANS = {
+        'PLAN_1' : 'Mega Package',
+        'PLAN_2' : 'Migo Package',
+    }
 
 ## Run
 

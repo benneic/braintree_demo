@@ -76,8 +76,11 @@ def create_customer():
     if not result.is_success:
         return "<h1>New Subscription Error: {0}</h1>".format(result.message)
 
-    return render_template("response.html", status=result.subscription.status, plans=config.PLANS, package=package,
-                    customer=customer)
+    return render_template("response.html",
+                           status=result.subscription.status,
+                           plans=config.PLANS,
+                           package=package,
+                           customer=customer)
 
 
 if __name__ == '__main__':
