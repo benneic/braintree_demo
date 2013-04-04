@@ -6,6 +6,7 @@ app = Flask(__name__)
 import config
 
 import logging as logger
+logger.basicConfig(level=logger.INFO)
 
 
 braintree.Configuration.configure(braintree.Environment.Sandbox,
@@ -26,37 +27,37 @@ def check_fields(container, fields):
 
 @app.route("/")
 def form():
-    app.logger.info('Mainpage')
+    logger.info('Mainpage')
     return render_template("braintree.html", plans=config.PLANS)
 
 
 @app.route("/webhook")
 def webhook_register():
-    app.logger.info('Challenge')
+    logger.info('Challenge')
     bt_challenge = request.args.get('bt_challenge')
     return braintree.WebhookNotification.verify(bt_challenge)
 
 
 @app.route("/webhook", methods=["POST"])
 def webhook_action():
-    app.logger.info('Webhook')
+    logger.info('Webhook')
     signature = request.form.get('bt_signature', type=str)
     payload = request.form.get('bt_payload', type=str)
     if signature and payload:
         hook = braintree.WebhookNotification.parse(signature, payload)
-        app.logger.info('Webhook {kind} - id:{subscription_id} price:{price}'.format(
+        logger.info('Webhook {kind} - id:{subscription_id} price:{price}'.format(
             kind=hook.kind,
             subscription_id=hook.subscription.id,
             price=hook.subscription.price
         ))
-    app.logger.info('Wrong params: %s' % dict(request.form).keys())
+    logger.info('Wrong params: %s' % dict(request.form).keys())
     return unicode(dict(request.form))
 
 
 
 @app.route('/plan', methods=["POST"])
 def create_customer():
-    app.logger.info('Plan')
+    logger.info('Plan')
 
     required_fields = ('package','company','email','first_name','last_name','postal_code','number','month','year','cvv')
     not_found = check_fields(request.form, required_fields)
