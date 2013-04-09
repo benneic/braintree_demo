@@ -5,10 +5,12 @@ app = Flask(__name__)
 
 import config
 
-if not app.debug:
-    import logging
-    handler = logging.Logger('app', level=logging.DEBUG)
-    app.logger.addHandler(handler)
+if app.debug:
+    logger = app.logger
+else:
+    import logging as logger
+    logger.basicConfig(level=logger.INFO)
+
 
 braintree.Configuration.configure(braintree.Environment.Sandbox,
                                   merchant_id=config.MERCHANT_ID,
@@ -39,12 +41,12 @@ def webhook_register():
 
 @app.route("/webhook", methods=["POST"])
 def webhook_action():
-    app.logger.info('Webhook params: %s' % dict(request.form).keys())
+    logger.info('Webhook params: %s' % dict(request.form).keys())
     signature = request.form.get('bt_signature', type=str)
     payload = request.form.get('bt_payload', type=str)
     if signature and payload:
         hook = braintree.WebhookNotification.parse(signature, payload)
-        app.logger.info('Webhook {kind} - id:{subscription_id} price:{price}'.format(
+        logger.info('Webhook {kind} - id:{subscription_id} price:{price}'.format(
             kind=hook.kind,
             subscription_id=hook.subscription.id,
             price=hook.subscription.price
@@ -59,10 +61,12 @@ def create_customer():
     package = request.form['package']
     customer_id = request.form.get('customer_id')
     if customer_id:
-        customer = braintree.Customer.find(customer_id)
+        try:
+            customer = braintree.Customer.find(customer_id)
+        except Exception as e:
+            pass
 
-    if not isinstance(customer, braintree.Customer):
-
+    if not customer:
         required_fields = ('package','company','email','first_name','last_name','postal_code','number','month','year','cvv')
         not_found = check_fields(request.form, required_fields)
         if not_found:
@@ -83,6 +87,8 @@ def create_customer():
                 "cvv": request.form["cvv"]
             }
         }
+        if customer_id:
+            customer['id'] = customer_id
         result = braintree.Customer.create(customer)
         if result.is_success:
             customer = result.customer
