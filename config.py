@@ -8,7 +8,7 @@ PRIVATE_KEY = os.environ['PRIVATE_KEY']
 CLIENT_SIDE_ENCRYPTION_KEY = os.environ['CLIENT_SIDE_ENCRYPTION_KEY']
 
 PLANS = {
-    'STORE_59_AUD'     : 'Store Package',
-    'FRANCHISE_99_AUD' : 'Franchise Package',
+    'STORE_AUD': 'Store Package',
+    'FRANCHISE_AUD': 'Franchise Package',
 }
 
