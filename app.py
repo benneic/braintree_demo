@@ -99,7 +99,7 @@ def create_customer():
     payment_method_token = customer.credit_cards[0].token
 
     result = braintree.Subscription.create({
-        'id': result.customer.id,
+        'id': customer.id,
         "payment_method_token": payment_method_token,
         "plan_id": package
     })
