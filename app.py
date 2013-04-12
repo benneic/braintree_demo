@@ -89,6 +89,7 @@ def create_customer():
         }
         if customer_id:
             customer['id'] = customer_id
+            customer['credit_card']['id'] = customer_id
         result = braintree.Customer.create(customer)
         if result.is_success:
             customer = result.customer
@@ -98,6 +99,7 @@ def create_customer():
     payment_method_token = customer.credit_cards[0].token
 
     result = braintree.Subscription.create({
+        'id': result.customer.id,
         "payment_method_token": payment_method_token,
         "plan_id": package
     })
