@@ -89,7 +89,7 @@ def create_customer():
         }
         if customer_id:
             customer['id'] = customer_id
-            customer['credit_card']['id'] = customer_id
+            customer['credit_card']['token'] = customer_id
         result = braintree.Customer.create(customer)
         if result.is_success:
             customer = result.customer
